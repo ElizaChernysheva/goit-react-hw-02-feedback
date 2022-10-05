@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
  class App extends Component {
   state = {
@@ -56,7 +56,6 @@ import React, { Component, Fragment } from 'react';
       </div>
     );
   }
-
 };
 
 export default App;
