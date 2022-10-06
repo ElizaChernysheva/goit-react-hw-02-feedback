@@ -1,0 +1,9 @@
+.sectionStat__list{
+  background: #f8f8de;
+}
+
+.sectionStat__item:not(:first-child){
+  margin-top: 15px;
+}
+
+

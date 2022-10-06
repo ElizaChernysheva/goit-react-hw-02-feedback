@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Statistics from './Statistics/Statistics';
+import Section from './Section/Section';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Notification from './Notification/Notification';
 
  class App extends Component {
   state = {
@@ -17,43 +21,41 @@ import React, { Component } from 'react';
      })
    }
 
+   countTotalFeedback = () =>{
+     const {good,bad,neutral} = this.state;
+     return good + bad + neutral;
+   }
+
+   countPositiveFeedbackPercentage = () =>{
+     const {good} = this.state;
+     const total = this.countTotalFeedback()
+     return !good ? 0: (good * 100 / total).toFixed(1);
+   }
+
   render() {
     const {good,bad,neutral} = this.state;
-    const total = Number(good) + Number(bad) + Number(neutral);
-    const positive = !good ? 0: (good * 100 / total).toFixed(1);
+
     return (
-      <div>
-        <section className='section'>
-          <h2 className='heading'>Please leave feedback</h2>
-          <div className='btn__wrapper'>
-            <button className='button' name='good' type='btn' onClick={this.handleOnClick}>Good</button>
-            <button className='button' name='neutral' type='btn' onClick={this.handleOnClick}>Neutral</button>
-            <button className='button' name='bad' type='btn' onClick={this.handleOnClick}>Bad</button>
-          </div>
-        </section>
+    <div>
+      <Section title="Please leave feedback">
+        <FeedbackOptions
+          options={Object.keys(this.state)}
+          onLeaveFeedback={this.handleOnClick}
+        />
+      </Section>
+      <Section title="Statistics">
+        {this.countTotalFeedback() > 0 ?
+          <Statistics good={good}
+                      neutral={neutral}
+                      bad={bad}
+                      total={this.countTotalFeedback}
+                      positivePercentage={this.countPositiveFeedbackPercentage}
+          /> :
+          <Notification message="There is no feedback"/>
+        }
 
-        <section className='section section-stat'>
-          <h2 className='heading'>Statistics</h2>
-          <ul className='section-stat__list'>
-            <li className='section-stat__item'>
-              Good: <span>{good}</span>
-            </li>
-            <li className='section-stat__item'>
-              Neutral: <span>{neutral}</span>
-            </li>
-            <li className='section-stat__item'>
-              Bad: <span>{bad}</span>
-            </li>
-            <li className='section-stat__item'>
-              Total: <span>{total}</span>
-            </li>
-            <li className='section-stat__item'>
-              Positive Feedback: <span>{positive}%</span>
-            </li>
-          </ul>
-        </section>
-
-      </div>
+      </Section>
+    </div>
     );
   }
 };

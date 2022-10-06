@@ -1,0 +1,25 @@
+.button{
+  display: inline-block;
+  width: 80px;
+  height: 30px;
+
+  font-weight: 600;
+
+  background-color: #c2dd9e;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover{
+  background-color: #78a843;
+  transition: background-color linear 300ms;
+}
+
+.button:not(:last-child){
+  margin-right: 20px;
+}
+
+.btn__wrapper{
+  display: flex;
+  justify-content: center;
+}
